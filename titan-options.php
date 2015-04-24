@@ -41,14 +41,17 @@ function dotc_lto_pt_save_upload_data() {
 			}
 
 			// Don't save column headers
-			//if ( ! is_numeric( trim( $csvRow[0] ) ) ) {
-			//	continue;
-			//}
+			if ( ! is_numeric( trim( $csvRow[0] ) ) ) {
+				continue;
+			}
 
 			// We have a different timestamp format in the CSV, convert it to MYSQL format
 			$regDate = DateTime::createFromFormat( 'm/d/Y', $csvRow[0] );
 			$regDated = $regDate->format( 'Y-m-d' );
 			
+			if ( DateTime::getLastErrors() ) {
+				continue;
+			}
 					
 			// If all the results are empty, don't save the entry
 			if ( empty( $csvRow[0] ) && empty( $csvRow[1] ) && empty( $csvRow[2] ) && empty( $csvRow[3] ) ) {
