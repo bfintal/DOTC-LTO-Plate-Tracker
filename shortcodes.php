@@ -1,4 +1,6 @@
 <?php
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
 	
 add_action( 'wp_footer', 'lto_include_templates' );
 function lto_include_templates() {

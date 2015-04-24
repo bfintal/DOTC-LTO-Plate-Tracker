@@ -16,6 +16,8 @@
  *		* Now integrates with TGM Plugin Activation - uses TGM instead of displaying
  *			our own admin notice
  */
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 
 if ( ! class_exists( 'TitanFrameworkChecker' ) ) {
