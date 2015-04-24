@@ -1,5 +1,16 @@
 <?php
 	
+add_action( 'wp_footer', 'lto_include_templates' );
+function lto_include_templates() {
+	include LTO_PATH . 'template-result-no.php';
+	include LTO_PATH . 'template-result-ok.php';
+}
+
+add_action( 'wp_enqueue_scripts', 'lt_include_templating' );
+function lt_include_templating() {
+	wp_enqueue_script( 'wp-util' );
+}
+	
 add_shortcode( 'lto_search_form', 'lto_search_form' );
 function lto_search_form( $atts, $content = '' ) {
 	$atts = shortcode_atts( array(
@@ -22,7 +33,8 @@ function lto_search_form( $atts, $content = '' ) {
 					'search': $(this).parent().find('input[type="text"]').val()
 				},
 				function( data ) {
-					$('body').trigger('lto_search_form_receive', { 'data': data } );
+					data = JSON.parse( data );
+					$('body').trigger('lto_search_form_receive', [{ 'data': data }] );
 				}
 			);
 		});
@@ -48,8 +60,16 @@ function lto_search_form_results( $atts, $content = '' ) {
 	?>
 	<script type="text/javascript">
 	jQuery(document).ready(function($) {
-		$('html').on('lto_search_form_receive', 'body', function( data ) {
-			$('.lto_search_form_results').hide().html( data.data ).fadeIn();
+		$('html').on('lto_search_form_receive', 'body', function( e, result ) {
+			
+			var template = 'result-ok';
+			if ( result.data === false ) {
+				template = 'result-no';
+			}
+			
+			$('.lto_search_form_results').hide().html(
+				wp.template( template )( result.data )
+			).fadeIn();
 		});
 	});
 	</script>
@@ -72,13 +92,17 @@ function wp_ajax_plate_search() {
 	}
 
 	global $wpdb;
-	// $categoryIDs = explode( ',', $_POST['category_ids'] );
-//
-// 	foreach ( $categoryIDs as $position => $categoryID ) {
-// 		$wpdb->query( $wpdb->prepare( "UPDATE dotc_project_categories SET position = %d WHERE id = %d;", $position, $categoryID ) );
-// 	}
+	$row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM " . $wpdb->prefix . "dotc_lto_pt_vehicles WHERE engine_number = %s OR conduction_sticker = %s", $_POST['search'], $_POST['search'] ) );
+	
+	if ( ! empty( $row ) ) {
+		echo json_encode( array(
+			'date' => date( 'F d Y', strtotime( $row->received_date ) ),
+			'unit' => $row->unit,
+		) );
+	} else {
+		echo json_encode( false );
+	}
 
-	echo "Works";
 	wp_die();
 }
 	
