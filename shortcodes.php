@@ -35,7 +35,7 @@ function lto_search_form( $atts, $content = '' ) {
 				{
 					'action': 'plate_search',
 					'nonce': '<?php echo esc_attr( wp_create_nonce( 'plate_search' ) ) ?>',
-					'search': $(this).parent().find('input[type="text"]').val()
+					'search': $(this).parent().find('input[type="text"]').val().trim()
 				},
 				function( data ) {
 					data = JSON.parse( data );
