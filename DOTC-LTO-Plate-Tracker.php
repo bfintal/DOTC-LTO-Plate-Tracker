@@ -12,16 +12,10 @@
 */
 
 require_once( 'shortcodes.php' );
-	
-// Shortcode for checker form
-function checker_form() {
-	echo "I CHECK YOUR PLATES!";
-}
+defined( 'LTO_VERSION' ) or define( 'LTO_VERSION', '1.0' );
 
-// Shortcode for checker output?
-function checker_output() {
-	echo "";
-}
+// Increment this when the database structure changes
+defined( 'DB_VERSION' ) or define( 'DB_VERSION', '1.0' );
 
 // Load required files
 require_once( 'titan-framework-checker.php' );
@@ -40,7 +34,7 @@ function dotc_lto_pt_create_vehicle_table() {
 	}
 
 	// Check if table exists
-	if ( get_option( 'dotc_lto_pt_vehicle_table_created' ) !== false ) {
+	if ( get_option( 'dotc_lto_pt_vehicle_table_created' ) === DB_VERSION ) {
 		return;
 	}
 
@@ -63,5 +57,5 @@ function dotc_lto_pt_create_vehicle_table() {
 	dbDelta( $sql );
 
 	// Remember that we already created the table
-	update_option( 'dotc_lto_pt_vehicle_table_created', true );
+	update_option( 'dotc_lto_pt_vehicle_table_created', DB_VERSION );
 }
