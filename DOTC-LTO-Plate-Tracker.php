@@ -22,3 +22,7 @@ function checker_form() {
 function checker_output() {
 	echo "";
 }
+
+// Load required files
+require_once( 'titan-framework-checker.php' );
+require_once( 'titan-options.php' );
