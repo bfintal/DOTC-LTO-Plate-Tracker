@@ -1,4 +1,6 @@
 <?php
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
 	
 add_action( 'wp_footer', 'lto_include_templates' );
 function lto_include_templates() {
@@ -25,6 +27,9 @@ function lto_search_form( $atts, $content = '' ) {
 	<script type="text/javascript">
 	jQuery(document).ready(function($) {
 		$('body').on('click', '.lto_search_form button', function() {
+			if ( $(this).parent().find('input[type="text"]').val().trim() === '' ) {
+				return;
+			}
 			$.post( 
 				'<?php echo esc_url_raw( admin_url( 'admin-ajax.php' ) ) ?>',
 				{

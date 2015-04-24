@@ -11,6 +11,9 @@
 * Domain Path: /languages
 */
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 require_once( 'shortcodes.php' );
 defined( 'LTO_VERSION' ) or define( 'LTO_VERSION', '1.0' );
 
