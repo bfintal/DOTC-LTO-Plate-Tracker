@@ -30,37 +30,38 @@ function dotc_lto_pt_save_upload_data() {
 		global $wpdb;
 
 		$csvRows = str_getcsv( $_POST['csv'], "\n" );
-
+		
 		foreach ( $csvRows as $key => $value ) {
 
 			$csvRow = str_getcsv( $value );
-
+			
 			// Don't save if we don't have any data
 			if ( count( $csvRow[0] ) == 0 ) {
 				continue;
 			}
 
 			// Don't save column headers
-			if ( ! is_numeric( trim( $csvRow[0] ) ) ) {
-				continue;
-			}
+			//if ( ! is_numeric( trim( $csvRow[0] ) ) ) {
+			//	continue;
+			//}
 
 			// We have a different timestamp format in the CSV, convert it to MYSQL format
-			$openDate = DateTime::createFromFormat( 'n/j/Y', $csvRow[0] );
-			$openDate = $openDate->format( 'Y-m-d H:i:s' );	
+			$regDate = DateTime::createFromFormat( 'm/d/Y', $csvRow[0] );
+			$regDated = $regDate->format( 'Y-m-d' );
 			
+					
 			// If all the results are empty, don't save the entry
 			if ( empty( $csvRow[0] ) && empty( $csvRow[1] ) && empty( $csvRow[2] ) && empty( $csvRow[3] ) ) {
 				continue;
 			}
-
+						
 			// If engine number exists, don't save the entry
 			$sql = $wpdb->prepare( "SELECT count(*) FROM " . $wpdb->prefix . "dotc_lto_pt_vehicles WHERE engine_number = %s", trim( $csvRow[2] ) );
 			$numberOfMatches = $wpdb->get_var( $sql );
 			if ( $numberOfMatches != '0' ) {
 				continue;
 			}
-
+			
 			// If conduction sticker exists, don't save the entry
 			$sql = $wpdb->prepare( "SELECT count(*) FROM " . $wpdb->prefix . "dotc_lto_pt_vehicles WHERE conduction_sticker = %s", trim( $csvRow[1] ) );
 			$numberOfMatches = $wpdb->get_var( $sql );
@@ -69,12 +70,15 @@ function dotc_lto_pt_save_upload_data() {
 			}
 
 			// Save our data
-			$sql = $wpdb->prepare( "INSERT IGNORE INTO " . $wpdb->prefix . "dotc_lto_pt_vehicles (date_registered, conduction_sticker, engine_number, open_datetime) values ( %d, %s, %s, %s )",
-				trim( $csvRow[0] ),
+			$sql = $wpdb->prepare( "INSERT IGNORE INTO " . $wpdb->prefix . "dotc_lto_pt_vehicles (received_date, conduction_sticker, engine_number, unit) values ( %s, %s, %s, %s )",
+				$regDated,
 				trim( $csvRow[1] ),				
 				trim( $csvRow[2] ),				
 				trim( $csvRow[3] )
 			);
+			
+			//echo $sql;
+			//die();
 			$wpdb->query( $sql );
 		}
 
@@ -127,7 +131,7 @@ function dotc_lto_pt_import_notice() {
 
     ?>
     <div class="updated">
-        <p>Draw results have been imported!</p>
+        <p>Vehicle information have been successfully imported.</p>
     </div>
     <?php
 }
