@@ -17,6 +17,9 @@ defined( 'LTO_VERSION' ) or define( 'LTO_VERSION', '1.0' );
 // Increment this when the database structure changes
 defined( 'DB_VERSION' ) or define( 'DB_VERSION', '1.0' );
 
+defined( 'LTO_FILE' ) or define( 'LTO_FILE', __FILE__ );
+defined( 'LTO_PATH' ) or define( 'LTO_PATH', trailingslashit( dirname( __FILE__ ) ) );
+
 // Load required files
 require_once( 'titan-framework-checker.php' );
 require_once( 'titan-options.php' );
