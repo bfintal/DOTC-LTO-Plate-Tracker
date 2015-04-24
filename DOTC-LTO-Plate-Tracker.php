@@ -41,7 +41,7 @@ function dotc_lto_pt_create_vehicle_table() {
 
 	// Check if table exists
 	if ( get_option( 'dotc_lto_pt_vehicle_table_created' ) !== false ) {
-		// return;
+		return;
 	}
 
 	// Run code that creates table
