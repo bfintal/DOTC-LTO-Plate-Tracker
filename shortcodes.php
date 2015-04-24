@@ -43,6 +43,11 @@ function lto_search_form( $atts, $content = '' ) {
 				}
 			);
 		});
+		$('body').on('keypress', '.lto_search_form input[type="text"]', function(e) {
+			if (e.which == 13 ) {
+				$(this).parents('.lto_search_form:eq(0)').find('button').trigger('click');
+			}
+		});
 	});
 	</script>
 	<div class="lto_search_form">
