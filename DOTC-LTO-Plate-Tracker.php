@@ -10,6 +10,8 @@
 * Text Domain: dotc-lto-pt
 * Domain Path: /languages
 */
+
+require_once( 'shortcodes.php' );
 	
 // Shortcode for checker form
 function checker_form() {
