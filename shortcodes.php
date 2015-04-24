@@ -27,6 +27,7 @@ function lto_search_form( $atts, $content = '' ) {
 	<script type="text/javascript">
 	jQuery(document).ready(function($) {
 		$('body').on('click', '.lto_search_form button', function() {
+			$(this).attr('disabled', 'disabled');
 			if ( $(this).parent().find('input[type="text"]').val().trim() === '' ) {
 				return;
 			}
@@ -42,6 +43,10 @@ function lto_search_form( $atts, $content = '' ) {
 					$('body').trigger('lto_search_form_receive', [{ 'data': data }] );
 				}
 			);
+			var $this = $(this);
+			setTimeout( function() {
+				$this.removeAttr('disabled');
+			}, 3000 );
 		});
 		$('body').on('keypress', '.lto_search_form input[type="text"]', function(e) {
 			if (e.which == 13 ) {
