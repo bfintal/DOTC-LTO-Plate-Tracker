@@ -1,0 +1,121 @@
+@import url(http://fonts.googleapis.com/css?family=Oxygen);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400);
+body {
+    background: #fff;
+    font-size: 18px;
+    line-height: 1.6em;
+    color: #222;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+* {
+    box-sizing: border-box;
+}
+#wrapper {
+    text-align: center;
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.post-edit-link {
+    display: none;
+}
+h1, h2, h3, h4, h5, h6 {
+    &, a {
+        font-family: 'Oxygen', sans-serif;
+        color: #444;
+    }
+    margin-bottom: 20px;
+}
+p {
+    margin-bottom: 20px;
+}
+h1 {
+    font-size: 3.5em;
+    line-height: 1.1em;
+}
+body {
+    margin-top: 10vh;
+}
+@media screen and (max-width: 600px) {
+    body {
+        margin-top: 10vh;
+    }
+}
+#lto_search_form_field, button {
+    font-size: 1.2em;
+    padding: .3em .5em;
+    margin: 0 0 20px;
+    border: 1px solid #ddd;
+    border-bottom-width: 3px;
+    background: transparent;
+    border-radius: 4px;
+    font-weight: 200;
+}
+#lto_search_form_field {
+    width: 40vw;
+}
+.lto_search_form {
+    margin-top: 30px;
+}
+button {
+    vertical-align: top;
+    font-size: .8em;
+    padding: .8em 1em;
+    color: #fff;
+    background: #19B5FE;
+    border: #19B5FE;
+    text-transform: uppercase;
+    opacity: .7;
+    -webkit-transition: all .4s;
+    -moz-transition: all .4s;
+    transition: all .4s;
+    cursor: pointer;
+    &:hover {
+        opacity: 1;
+    }
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-bottom-color: #22A7F0;
+}
+@media screen and (max-width: 600px) {
+    h1 {
+        font-size: 2.5em;
+    }
+    #lto_search_form_field, button {
+        width: 100%;
+    }
+}
+.disclaimer {
+    font-size: .7em;
+    line-height: 1.5em;
+    color: #777;
+    font-style: italic;
+}
+.lto_search_form_results > div {
+    background: #FFF6D7;
+    border: 1px solid #F5D76E;
+    border-radius: 4px;
+    padding: 30px;
+    .disclaimer {
+        margin-top: 20px;
+    }
+    &.result-no {
+        background: #FFF5E8;
+        border-color: #F89406;
+    }
+}
+.lto_search_form_results:empty {
+    display: none;
+}
+input, button {
+    outline: 0 !important;
+}
+img {
+    max-width: 80%;
+    height: auto;
+}
+button[disabled] {
+    opacity: .2;
+		background: black;
+		border-color: black;
+}
