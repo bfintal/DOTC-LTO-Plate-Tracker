@@ -107,7 +107,7 @@ function wp_ajax_plate_search() {
 	}
 
 	global $wpdb;
-	$row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM " . $wpdb->prefix . "dotc_lto_pt_vehicles WHERE engine_number = %s", $_POST['search'], $_POST['search'] ) );
+	$row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM " . $wpdb->prefix . "dotc_lto_pt_vehicles WHERE engine_number = %s", $_POST['search'] ) );
 	
 	if ( ! empty( $row ) ) {
 		echo json_encode( array(
