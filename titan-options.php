@@ -39,6 +39,8 @@ function dotc_lto_pt_save_upload_data() {
 			
 			$csvRow = array_map( 'trim', $csvRow );
 			
+			$descRow = $csvRow[2];
+			
 			// Don't save if we don't have any data
 			if ( count( $csvRow ) == 0 ) {
 				continue;
@@ -54,7 +56,7 @@ function dotc_lto_pt_save_upload_data() {
 			$regDated = $regDate->format( 'Y-m-d' );		
 
 			// If all the results are empty, don't save the entry
-			if ( empty( $csvRow[0] ) && empty( $csvRow[1] ) && empty( $csvRow[2] ) ) {
+			if ( empty( $csvRow[0] ) && empty( $csvRow[1] ) ) {
 				continue;
 			}
 						
@@ -62,6 +64,7 @@ function dotc_lto_pt_save_upload_data() {
 			$sql = $wpdb->prepare( "SELECT count(*) FROM " . $wpdb->prefix . "dotc_lto_pt_vehicles WHERE engine_number = %s", trim( $csvRow[1] ) );
 			$numberOfMatches = $wpdb->get_var( $sql );
 			if ( $numberOfMatches != '0' ) {
+				//echo "duplicate detected";
 				continue;
 			}
 
@@ -69,7 +72,7 @@ function dotc_lto_pt_save_upload_data() {
 			$sql = $wpdb->prepare( "INSERT IGNORE INTO " . $wpdb->prefix . "dotc_lto_pt_vehicles (received_date, engine_number, unit) values ( %s, %s, %s )",
 				$regDated,
 				trim( $csvRow[1] ),				
-				trim( $csvRow[2] )
+				trim( $descRow )
 			);
 			
 			//echo $sql;
@@ -78,6 +81,7 @@ function dotc_lto_pt_save_upload_data() {
 		}
 
 		// Done saving, redirect to prevent page refreshes
+		//die();
 		wp_redirect( admin_url( 'admin.php?page=upload-vehicle-data&message=done' ) );
 		die();
 	}

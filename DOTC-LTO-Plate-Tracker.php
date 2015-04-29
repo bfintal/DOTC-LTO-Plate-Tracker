@@ -18,7 +18,7 @@ require_once( 'shortcodes.php' );
 defined( 'LTO_VERSION' ) or define( 'LTO_VERSION', '1.1' );
 
 // Increment this when the database structure changes
-defined( 'DB_VERSION' ) or define( 'DB_VERSION', '1.1' );
+defined( 'DB_VERSION' ) or define( 'DB_VERSION', '1.2' );
 
 defined( 'LTO_FILE' ) or define( 'LTO_FILE', __FILE__ );
 defined( 'LTO_PATH' ) or define( 'LTO_PATH', trailingslashit( dirname( __FILE__ ) ) );
