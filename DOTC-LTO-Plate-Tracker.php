@@ -54,8 +54,7 @@ function dotc_lto_pt_create_vehicle_table() {
 		  engine_number varchar(50) NOT NULL,
 		  unit varchar(10) NOT NULL,
 		  PRIMARY KEY  (id),
-		  UNIQUE KEY engine_number (engine_number),
-  		  UNIQUE KEY conduction_sticker (conduction_sticker)
+		  UNIQUE KEY engine_number (engine_number)
 		) $charset_collate;";
 		
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
