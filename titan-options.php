@@ -44,51 +44,32 @@ function dotc_lto_pt_save_upload_data() {
 				continue;
 			}
 
-			// Don't save column headers
-			//if ( ! is_numeric( trim( $csvRow[0] ) ) ) {
-			//	continue;
-			//}
-
+			// Stop if first row isn't even alphanumeric, indicative it's not a date.
 			if ( ! preg_match( '/^[0-9\/]+$/', $csvRow[0] ) ) {
 			    continue;
 			}					
 
 			// We have a different timestamp format in the CSV, convert it to MYSQL format
 			$regDate = DateTime::createFromFormat( 'm/d/Y', $csvRow[0] );
-			$regDated = $regDate->format( 'Y-m-d' );
-
-			  
-			
-			//if ( DateTime::getLastErrors() ) {
-			//	continue;
-			//}
-			
+			$regDated = $regDate->format( 'Y-m-d' );		
 
 			// If all the results are empty, don't save the entry
-			if ( empty( $csvRow[0] ) && empty( $csvRow[1] ) && empty( $csvRow[2] ) && empty( $csvRow[3] ) ) {
+			if ( empty( $csvRow[0] ) && empty( $csvRow[1] ) && empty( $csvRow[2] ) ) {
 				continue;
 			}
 						
 			// If engine number exists, don't save the entry
-			$sql = $wpdb->prepare( "SELECT count(*) FROM " . $wpdb->prefix . "dotc_lto_pt_vehicles WHERE engine_number = %s", trim( $csvRow[2] ) );
-			$numberOfMatches = $wpdb->get_var( $sql );
-			if ( $numberOfMatches != '0' ) {
-				continue;
-			}
-			
-			// If conduction sticker exists, don't save the entry
-			$sql = $wpdb->prepare( "SELECT count(*) FROM " . $wpdb->prefix . "dotc_lto_pt_vehicles WHERE conduction_sticker = %s", trim( $csvRow[1] ) );
+			$sql = $wpdb->prepare( "SELECT count(*) FROM " . $wpdb->prefix . "dotc_lto_pt_vehicles WHERE engine_number = %s", trim( $csvRow[1] ) );
 			$numberOfMatches = $wpdb->get_var( $sql );
 			if ( $numberOfMatches != '0' ) {
 				continue;
 			}
 
 			// Save our data
-			$sql = $wpdb->prepare( "INSERT IGNORE INTO " . $wpdb->prefix . "dotc_lto_pt_vehicles (received_date, conduction_sticker, engine_number, unit) values ( %s, %s, %s, %s )",
+			$sql = $wpdb->prepare( "INSERT IGNORE INTO " . $wpdb->prefix . "dotc_lto_pt_vehicles (received_date, engine_number, unit) values ( %s, %s, %s )",
 				$regDated,
 				trim( $csvRow[1] ),				
-				trim( $csvRow[2] ),				
-				trim( $csvRow[3] )
+				trim( $csvRow[2] )
 			);
 			
 			//echo $sql;

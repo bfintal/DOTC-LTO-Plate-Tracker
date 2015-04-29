@@ -3,7 +3,7 @@
 * Plugin Name: DOTC-LTO Plate Tracker
 * Plugin URI: https://www.dotc.gov.ph
 * Description: Provides means of checking legitimacy of a given vehicle information, such as plate number.
-* Version: 1.0
+* Version: 1.1
 * Author: Gambit Technologies, Inc.
 * Author URI: http://gambit.ph
 * License: Proprietary
@@ -15,10 +15,10 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 require_once( 'shortcodes.php' );
-defined( 'LTO_VERSION' ) or define( 'LTO_VERSION', '1.0' );
+defined( 'LTO_VERSION' ) or define( 'LTO_VERSION', '1.1' );
 
 // Increment this when the database structure changes
-defined( 'DB_VERSION' ) or define( 'DB_VERSION', '1.0' );
+defined( 'DB_VERSION' ) or define( 'DB_VERSION', '1.1' );
 
 defined( 'LTO_FILE' ) or define( 'LTO_FILE', __FILE__ );
 defined( 'LTO_PATH' ) or define( 'LTO_PATH', trailingslashit( dirname( __FILE__ ) ) );
@@ -52,7 +52,6 @@ function dotc_lto_pt_create_vehicle_table() {
 		  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 		  received_date datetime NOT NULL,
 		  engine_number varchar(50) NOT NULL,
-		  conduction_sticker varchar(50) NOT NULL,
 		  unit varchar(10) NOT NULL,
 		  PRIMARY KEY  (id),
 		  UNIQUE KEY engine_number (engine_number),
